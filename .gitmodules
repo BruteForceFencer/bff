@@ -1,0 +1,9 @@
+[submodule "core"]
+	path = core
+	url = https://github.com/BruteForceFencer/core.git
+[submodule "daemonize"]
+	path = daemonize
+	url = https://github.com/BruteForceFencer/daemonize.git
+[submodule "bffctl"]
+	path = bffctl
+	url = https://github.com/BruteForceFencer/bffctl.git
