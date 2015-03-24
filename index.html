@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>BFF by BruteForceFencer</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/BruteForceFencer/bff">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/BruteForceFencer/bff/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/BruteForceFencer/bff/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>BFF</h1>
+          <p>Your first line of defence against brute force attacks.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/BruteForceFencer">BruteForceFencer</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <p>BFF is your first line of defence against brute force attacks.  It has been designed with a focus on low resource usage and high concurrency.  It’s open source and has simple APIs for several common languages.</p>
+
+<h2>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How It Works</h2>
+
+<p>The core of the system is a lightweight application that tracks repeated requests for usernames, passwords and any other type of data that can be tracked in a request (such as the attacker’s IP address).  You’re notified anytime you receive a request that appears to be an attack.</p>
+
+<p>It’s important to note that BFF only tells you <strong>which</strong> requests look like attacks and not <strong>what</strong> to do about it.  For more information on how to deal with brute force attacks, <a href="https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks">see here</a>.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>BFF is designed to be as flexible as possible by imposing as few requirements as possible.  Unless you compile from source, there are no dependencies to run BFF.</p>
+
+<h3>
+<a id="binaries" class="anchor" href="#binaries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binaries</h3>
+
+<p>There are binaries available for download for 64-bit Linux, Mac OS X and Windows on the <a href="https://github.com/JamesOwenHall/BruteForceProtection/releases">release page</a>.  For other operating systems or architectures, you’ll need to build from source.</p>
+
+<h3>
+<a id="from-source" class="anchor" href="#from-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>From Source</h3>
+
+<p>To build BFF from source, you’ll need to have the <a href="http://golang.org">Go compiler</a> and GCC.  Once you have those, simply run:</p>
+
+<pre><code>make DEST_DIR=/usr/local/bff
+</code></pre>
+
+<p>This will build the system and output the binaries to the <code>/usr/local/bff</code> directory.  It's also recommended that you add <code>/usr/local/bff/bin</code> to your PATH variable.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>See the <a href="https://github.com/JamesOwenHall/bfp/wiki/Getting-Started">wiki</a>.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
