@@ -7,7 +7,7 @@ bffctl: directories
 	go build -o $(DEST_DIR)/bin/bffctl bffctl/*.go
 
 core: directories
-	go build -o $(DEST_DIR)/util/core core/*.go
+	go build -o $(DEST_DIR)/util/bffcore core/*.go
 	cp core/config.json $(DEST_DIR)/config.json
 	cp -r core/assets $(DEST_DIR)/assets
 
