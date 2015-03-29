@@ -1,5 +1,5 @@
 CC=gcc
-DEST_DIR=out
+DEST_DIR=build
 
 all: bffctl core daemonize
 
