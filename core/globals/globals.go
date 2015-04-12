@@ -1,10 +1,10 @@
 package globals
 
 import (
-	"github.com/BruteForceFencer/core/config"
-	"github.com/BruteForceFencer/core/controlserver"
-	"github.com/BruteForceFencer/core/dashboard"
-	"github.com/BruteForceFencer/core/hitcounter"
+	"github.com/BruteForceFencer/bff/core/config"
+	"github.com/BruteForceFencer/bff/core/controlserver"
+	"github.com/BruteForceFencer/bff/core/dashboard"
+	"github.com/BruteForceFencer/bff/core/hitcounter"
 )
 
 var (

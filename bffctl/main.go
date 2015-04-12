@@ -10,7 +10,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/BruteForceFencer/core/controlserver"
+	"github.com/BruteForceFencer/bff/core/controlserver"
 )
 
 const usage = `BFF Controller

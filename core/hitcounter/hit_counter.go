@@ -3,7 +3,7 @@ package hitcounter
 
 import (
 	"fmt"
-	"github.com/BruteForceFencer/core/logger"
+	"github.com/BruteForceFencer/bff/core/logger"
 	"time"
 )
 
