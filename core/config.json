@@ -1,0 +1,19 @@
+{
+  "listen type": "unix",
+  "listen address": "/tmp/bff.sock",
+  "dashboard address": ":3000",
+  "directions": [
+    {
+      "name": "password",
+      "type": "string",
+      "window size": 10.2,
+      "max hits": 3
+    },
+    {
+      "name": "id",
+      "type": "int32",
+      "window size": 3,
+      "max hits": 3
+    }
+  ]
+}
