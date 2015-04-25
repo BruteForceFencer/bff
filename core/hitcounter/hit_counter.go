@@ -46,6 +46,8 @@ func (h *HitCounter) HandleRequest(direction string, value interface{}) bool {
 		h.Logger.Log(direction, fmt.Sprint(value))
 	}
 
+	h.Count.Inc()
+
 	return safe
 }
 
