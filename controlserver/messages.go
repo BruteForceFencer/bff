@@ -5,16 +5,8 @@ import (
 	"io"
 )
 
-type RequestType int8
-
-const (
-	HitRequest RequestType = iota
-	CommandRequest
-)
-
 // Request is a struct that follows the format that is expected for requests.
 type Request struct {
-	Type      RequestType
 	Direction string
 	Value     interface{}
 }

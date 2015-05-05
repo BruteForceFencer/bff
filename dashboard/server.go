@@ -2,8 +2,8 @@
 package dashboard
 
 import (
-	"github.com/BruteForceFencer/bff/core/config"
-	"github.com/BruteForceFencer/bff/core/hitcounter"
+	"github.com/BruteForceFencer/bff/config"
+	"github.com/BruteForceFencer/bff/hitcounter"
 	"net/http"
 )
 

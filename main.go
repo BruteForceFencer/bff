@@ -3,12 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/BruteForceFencer/bff/core/config"
-	"github.com/BruteForceFencer/bff/core/controlserver"
-	"github.com/BruteForceFencer/bff/core/dashboard"
-	"github.com/BruteForceFencer/bff/core/globals"
-	"github.com/BruteForceFencer/bff/core/hitcounter"
-	"github.com/BruteForceFencer/bff/core/version"
+	"github.com/BruteForceFencer/bff/config"
+	"github.com/BruteForceFencer/bff/controlserver"
+	"github.com/BruteForceFencer/bff/dashboard"
+	"github.com/BruteForceFencer/bff/globals"
+	"github.com/BruteForceFencer/bff/hitcounter"
+	"github.com/BruteForceFencer/bff/version"
 	"os"
 	"os/signal"
 	"runtime"
@@ -77,14 +77,7 @@ func start() {
 }
 
 func routeRequest(req *controlserver.Request) bool {
-	if req.Type == controlserver.HitRequest {
-		return globals.HitCounter.HandleRequest(req.Direction, req.Value)
-	} else if req.Type == controlserver.CommandRequest && req.Direction == "die" {
-		globals.Server.Close()
-		os.Exit(0)
-	}
-
-	return true
+	return globals.HitCounter.HandleRequest(req.Direction, req.Value)
 }
 
 func main() {

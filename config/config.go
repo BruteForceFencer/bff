@@ -5,9 +5,9 @@ package config
 
 import (
 	"fmt"
-	"github.com/BruteForceFencer/bff/core/hitcounter"
-	"github.com/BruteForceFencer/bff/core/logger"
-	"github.com/BruteForceFencer/bff/core/store"
+	"github.com/BruteForceFencer/bff/hitcounter"
+	"github.com/BruteForceFencer/bff/logger"
+	"github.com/BruteForceFencer/bff/store"
 	"os"
 )
 
