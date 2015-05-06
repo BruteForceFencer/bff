@@ -23,12 +23,12 @@ func (s *Server) serveHomePage(w http.ResponseWriter, r *http.Request) {
 		ListenAddress string
 		ListenType    string
 		Version       string
-		Directions    []hitcounter.Direction
+		Directions    map[string]*hitcounter.Direction
 	}{
 		ListenAddress: s.conf.ListenAddress,
 		ListenType:    s.conf.ListenType,
 		Version:       version.Version,
-		Directions:    s.conf.Directions,
+		Directions:    s.counter.Directions,
 	}
 
 	t, err := template.ParseFiles(filepath.FromSlash("assets/dashboard.html"))

@@ -16,19 +16,15 @@ type HitCounter struct {
 }
 
 // NewHitCounter returns an initialized *HitCounter.
-func NewHitCounter(directions []Direction, l *logger.Logger) *HitCounter {
+func NewHitCounter(directions []Direction) *HitCounter {
 	result := new(HitCounter)
 	result.Clock = NewClock()
 	result.Count = NewRunningCount(128, 24*time.Hour)
-	result.Logger = l
 
-	// We store the directions in a map instead of a slice for quick access.
 	result.Directions = make(map[string]*Direction)
 	for i := range directions {
-		dir := &directions[i]
-
-		result.Directions[dir.Name] = dir
-		result.scheduleCleanUp(dir)
+		result.Directions[directions[i].Name] = &directions[i]
+		result.scheduleCleanUp(&directions[i])
 	}
 
 	return result
@@ -47,7 +43,6 @@ func (h *HitCounter) HandleRequest(direction string, value interface{}) bool {
 	}
 
 	h.Count.Inc()
-
 	return safe
 }
 

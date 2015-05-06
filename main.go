@@ -3,15 +3,17 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"runtime"
+
 	"github.com/BruteForceFencer/bff/config"
 	"github.com/BruteForceFencer/bff/controlserver"
 	"github.com/BruteForceFencer/bff/dashboard"
 	"github.com/BruteForceFencer/bff/globals"
 	"github.com/BruteForceFencer/bff/hitcounter"
+	"github.com/BruteForceFencer/bff/store"
 	"github.com/BruteForceFencer/bff/version"
-	"os"
-	"os/signal"
-	"runtime"
 )
 
 func configure() {
@@ -30,23 +32,30 @@ func configure() {
 	}
 
 	// Read the configuration
-	var errs []error
-	globals.Configuration, errs = config.ReadConfig(*configFilename)
-	if len(errs) != 0 {
-		for _, err := range errs {
-			fmt.Fprintln(os.Stderr, "configuration error:", err)
-		}
-
+	var err error
+	globals.Configuration, err = config.ReadConfig(*configFilename)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "configuration error:", err)
 		os.Exit(1)
 	}
 }
 
 func initialize() {
 	// Create the hit counter
-	globals.HitCounter = hitcounter.NewHitCounter(
-		globals.Configuration.Directions,
-		globals.Configuration.Logger,
-	)
+	directions := make([]hitcounter.Direction, 0)
+	for _, dir := range globals.Configuration.Directions {
+		shardMap := store.NewShardMap(int64(dir.MaxTracked))
+		shardMap.Type = dir.Typ
+
+		directions = append(directions, hitcounter.Direction{
+			Store:       shardMap,
+			Name:        dir.Name,
+			CleanUpTime: dir.CleanUpTime,
+			MaxHits:     dir.MaxHits,
+			WindowSize:  dir.WindowSize,
+		})
+	}
+	globals.HitCounter = hitcounter.NewHitCounter(directions)
 
 	// Create the server
 	globals.Server = controlserver.New()

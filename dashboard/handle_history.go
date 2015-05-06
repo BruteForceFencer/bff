@@ -28,11 +28,10 @@ func (s *Server) HandleHistory(w http.ResponseWriter, r *http.Request) {
 	data := HistoryData{
 		Clock:      s.counter.Clock.GetTime(),
 		TotalHits:  s.counter.Count.Count(),
-		Directions: make([]interface{}, 0, len(s.conf.Directions)),
+		Directions: make([]interface{}, 0, len(s.counter.Directions)),
 	}
 
-	for iDirection := range s.conf.Directions {
-		direction := &s.conf.Directions[iDirection]
+	for _, direction := range s.counter.Directions {
 		direction.Store.CleanUp(data.Clock)
 
 		dirData := map[string]interface{}{

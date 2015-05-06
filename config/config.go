@@ -4,66 +4,57 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/BruteForceFencer/bff/hitcounter"
-	"github.com/BruteForceFencer/bff/logger"
-	"github.com/BruteForceFencer/bff/store"
-	"os"
+	"io/ioutil"
 )
 
-// Configuration is a struct that represents the contents of a configuration
-// file.
+// Configuration is a struct that mirrors the data as it should be found in
+// the configuration file.
 type Configuration struct {
-	Directions       []hitcounter.Direction
-	ListenAddress    string
-	ListenType       string
-	DashboardAddress string
-	AcceptedSources  []string
-	Logger           *logger.Logger
+	Directions       []Direction `json:"directions"`
+	ListenAddress    string      `json:"listen address"`
+	ListenType       string      `json:"listen type"`
+	DashboardAddress string      `json:"dashboard address"`
+	AcceptedSources  []string    `json:"accepted sources"`
+	Log              string      `json:"log"`
+}
+
+// Direction is a struct that mirrors the direction objects as they should
+// be found in the configuration file.
+type Direction struct {
+	Name        string  `json:"name"`
+	Typ         string  `json:"type"`
+	WindowSize  float64 `json:"window size"`
+	MaxHits     float64 `json:"max hits"`
+	CleanUpTime float64 `json:"clean up time"`
+	MaxTracked  float64 `json:"max tracked"`
 }
 
 // ReadConfig parses a configuration file and returns an instance of
 // Configuration.
-func ReadConfig(filename string) (*Configuration, []error) {
-	parsed, err := parseJsonFile(filename)
+func ReadConfig(filename string) (*Configuration, error) {
+	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, []error{err}
-	}
-	if errs := parsed.Validate(); len(errs) != 0 {
-		return nil, errs
+		return nil, fmt.Errorf("can't open configuration file %s.", filename)
 	}
 
-	result := new(Configuration)
-	result.ListenAddress = parsed.ListenAddress
-	result.ListenType = parsed.ListenType
-	result.DashboardAddress = parsed.DashboardAddress
-	result.Directions = make([]hitcounter.Direction, 0, len(parsed.Directions))
-	result.AcceptedSources = parsed.AcceptedSources
+	parsed := new(Configuration)
+	if err := json.Unmarshal(data, parsed); err != nil {
 
-	// Logger
-	if parsed.Log != "" {
-		file, err := os.OpenFile(parsed.Log, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-		if err != nil {
-			return nil, []error{fmt.Errorf("unable to open file %s", parsed.Log)}
+		// We want to know if the error is from bad syntax or if it's from a
+		// type mismatch so that we can provide useful errors.
+		typeErr, ok := err.(*json.UnmarshalTypeError)
+		if ok {
+			return nil, fmt.Errorf(
+				"configuration file has mismatched type; %s should be %s.",
+				typeErr.Value,
+				typeErr.Type,
+			)
+		} else {
+			return nil, fmt.Errorf("can't parse configuration file.")
 		}
-		result.Logger = logger.New(file)
 	}
 
-	// Directions
-	for _, jsonDir := range parsed.Directions {
-		// Create the direction according to its type
-		dir := hitcounter.Direction{
-			Store:       store.NewShardMap(int64(jsonDir.MaxTracked)),
-			Name:        jsonDir.Name,
-			CleanUpTime: jsonDir.CleanUpTime,
-			MaxHits:     jsonDir.MaxHits,
-			WindowSize:  jsonDir.WindowSize,
-		}
-		dir.Store.Type = jsonDir.Typ
-
-		// Add it to the list
-		result.Directions = append(result.Directions, dir)
-	}
-
-	return result, nil
+	return parsed, parsed.Validate()
 }
