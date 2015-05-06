@@ -1,4 +1,3 @@
-CC=gcc
 DEST_DIR=build
 
 all: core
