@@ -6,7 +6,7 @@ import (
 )
 
 // Version is the current version of BFF.
-const Version = "0.4.0"
+const Version = "0.5.0"
 
 // PrintVersion prints the version of BFF to standard output.
 func PrintVersion() {
